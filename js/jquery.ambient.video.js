@@ -91,7 +91,7 @@ if( typeof Object.create !== 'function' ) {
      // self.video_html = '<video preload muted>' + self.video_src_html + '</video>';
       
       // insert the full <video><source></source></video> into the element{
-      self.$elem.html( self.video_src_html );
+      self.$elem.append( self.video_src_html );
       //self.$elem.html( self.video_html );
     
       // store the video dom node so we can use html5 video methods like play/pause
