@@ -1,0 +1,45 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+.ambient-video {
+  position: relative;
+  height: 450px;
+  width: 100%;
+  background: black;
+  overflow: hidden;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.ambient-video video.ambient-video-loaded {
+  opacity: 1;
+}
+
+.ambient-video video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  -moz-transition: opacity 450ms ease;
+  -webkit-transition: opacity 450ms ease;
+  transition: opacity 450ms ease;
+}
+
+.spacer {
+  margin-bottom: 1000px;
+}

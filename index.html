@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+<link rel="stylesheet" href="css/main.css">
+<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+
+<div class="spacer">
+  <div id="videoContainer" class="ambient-video" data-video-src="video/team" data-video-fallback="video/team.jpg" data-video-loop="true"></div>
+
+  <button id="playVideo" type="button">Play First Instance</button>
+  <button id="pauseVideo" type="button">Pause First Instance</button>
+  <button id="toggleVideo" type="button">Toggle First Instance</button>
+</div>
+
+<div class="spacer">
+  <div id="videoContainer2" class="ambient-video" data-video-src="video/lifestyle" data-video-loop="true"></div>
+
+  <button id="playVideo2" type="button">Play Second Instance</button>
+  <button id="pauseVideo2" type="button">Pause Second Instance</button>
+  <button id="toggleVideo2" type="button">Toggle Second Instance</button>
+</div>
+
+<div class="spacer">
+  <div id="videoContainer3" class="ambient-video" data-video-src="test/product-hand" data-video-loop="false" data-video-offset="10%"></div>
+
+  <button id="playVideo3" type="button">Play Third Instance</button>
+  <button id="pauseVideo3" type="button">Pause Third Instance</button>
+  <button id="toggleVideo3" type="button">Toggle Third Instance</button>
+</div>
+
+
+<script src="js/vendor/jquery-1.10.2.min.js"></script>
+<script src="js/vendor/waypoints.js"></script>
+<script src="js/jquery.ambient.video.js"></script>
+
+<script>
+$(function(){
+  'use strict';
+
+  //instance 1
+  $('#videoContainer').ambientVideo({
+    videoClass: 'custom-video-class'
+  });
+
+  var videoInstance = $('#videoContainer').data('ambientVideo');
+
+  $('#playVideo').on('click',function(){
+    videoInstance.play();
+  });
+
+  $('#pauseVideo').on('click',function(){
+    videoInstance.pause();
+  });
+
+  $('#toggleVideo').on('click',function(){
+    videoInstance.toggle();
+  });
+
+  // instance 2
+  $('#videoContainer2').ambientVideo({
+    onComplete: function(){
+      console.log(this);
+      console.log(arguments);
+    }
+  });
+
+  var videoInstance2 = $('#videoContainer2').data('ambientVideo');
+
+  $('#playVideo2').on('click',function(){
+    videoInstance2.play();
+  });
+
+  $('#pauseVideo2').on('click',function(){
+    videoInstance2.pause();
+  });
+
+  $('#toggleVideo2').on('click',function(){
+    videoInstance2.toggle();
+  });
+
+  // instance 3
+  $('#videoContainer3').ambientVideo({
+    onComplete: function(){
+      console.log( this );
+      $(this).css('opacity', '.5');
+    }
+  });
+
+  var videoInstance3 = $('#videoContainer3').data('ambientVideo');
+
+  $('#playVideo3').on('click',function(){
+    videoInstance3.play();
+  });
+
+  $('#pauseVideo3').on('click',function(){
+    videoInstance3.pause();
+  });
+
+  $('#toggleVideo3').on('click',function(){
+    videoInstance3.toggle();
+  });
+});
+</script>
+</body>
+</html>
