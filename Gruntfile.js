@@ -2,6 +2,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        jshint: {
+            all: ['js/<%= pkg.file %>.js'],
+            options: {
+                jshintrc: 'js/.jshintrc'
+            },
+        },
+
         // Uglify
         uglify: {
             prod: {
@@ -41,7 +48,17 @@ module.exports = function(grunt) {
                     keepalive: true
                 }
             }
-        }
+        },
+
+        watch: {
+          css: {
+            files: 'js/<%= pkg.file %>.js',
+            tasks: ['jshint'],
+            options: {
+              livereload: true,
+            },
+          },
+        },
 
 
     });
