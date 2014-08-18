@@ -81,12 +81,11 @@ if( typeof Object.create !== 'function' ) {
     insertVideo: function(){
       var self = this;
 
-      self.video_src_html = '<video preload muted>' +
+      self.video_src_html = '<video preload="metadata" muted>' +
                             '<source src="'+ self.options.videoSrc + '.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">' +
                             '<source src="'+ self.options.videoSrc + '.webm" type="video/webm; codecs=vp8,vorbis">' + 
                             '</video>';
-      
-      console.log( self.video_src_html );
+
       // html5 video 
      // self.video_html = '<video preload muted>' + self.video_src_html + '</video>';
       
@@ -117,12 +116,40 @@ if( typeof Object.create !== 'function' ) {
 
       self.baseClass();
       self.load();
-      self.play();
 
-      self.$video_dom.on( 'loadedmetadata', function(){
-        console.log( 'video loadedmetadata loaded');
-        self.$video_dom.addClass('ambient-video-loaded');
-      });
+      // Wait until readyState is 4 (if you don't specify a poster, in IE before the video loads there will be a black box)
+      // Enough data is available—and the download rate is high enough—that the media can be played through to the end without interruption
+      // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
+      function checkReadyState() {
+        console.log( self.video_dom.readyState );
+        
+        if ( self.video_dom.readyState === 4 ) {
+          console.log('readystate === 4');
+          self.$video_dom.addClass('ambient-video-loaded');
+          self.play();
+        } else {
+          setTimeout( checkReadyState, 100 );
+        }
+      }
+
+      checkReadyState();
+
+      // self.$video_dom.on( 'loadeddata', function(){
+      //   console.log( 'video loadeddata loaded');
+      //   self.$video_dom.addClass('ambient-video-loaded');
+      // });
+
+      // self.$video_dom.on( 'loadedmetadata', function(){
+      //   console.log( 'video loadedmetadata loaded');
+
+      // });
+
+      // self.$video_dom.on( 'canplaythrough', function(){
+      //   console.log( 'video canplaythrough loaded');
+      //   self.$video_dom.addClass('ambient-video-loaded');
+      //   self.play();
+      // });
+
 
       self.$video_dom.on( 'ended', function(){
         console.log('video ended');
