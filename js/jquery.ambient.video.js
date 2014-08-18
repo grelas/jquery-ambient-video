@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  *  jQuery Ambient Video v1.0.0
  *  Author: Greg LaSpina
@@ -6,15 +8,13 @@
 
 if( typeof Object.create !== 'function' ) {
   Object.create = function( obj ) {
-    function F(){};
+    function F(){}
     F.prototype = obj;
     return new F();
   };
 }
 
 (function( $, window, document, undefined ){
-  'use strict';
-
   var AmbientVideo = {
     init: function( options, elem ){
 
@@ -119,34 +119,23 @@ if( typeof Object.create !== 'function' ) {
       self.load();
       self.play();
 
-      self.$video_dom.on('loadedmetadata', function(){
+      self.$video_dom.on( 'loadedmetadata', function(){
         console.log( 'video loadedmetadata loaded');
         self.$video_dom.addClass('ambient-video-loaded');
       });
 
-      // when the video ends
-      // if( typeof self.options.onComplete === 'function' ) {
-      //   self.video_dom.addEventListener( 'ended', self.options.onComplete, false );
-      // }
-
-      self.video_dom.addEventListener( 'ended', function(){
+      self.$video_dom.on( 'ended', function(){
         console.log('video ended');
-        // if( self.options.videoLoop ) {
-        //   self.restart();
-        // }
+
+        self.pause();
+        console.log( self.video_dom.paused );
+
         if( typeof self.options.onComplete === 'function' ) {
           self.options.onComplete.apply( self.elem, arguments );
         }
-      }, false );
+      });
 
     },
-
-    // restart: function(){
-    //   var self = this;
-
-    //   self.currentTime = 0.1;
-    //   self.play();
-    // },
 
     baseClass: function(){
       var self = this;
@@ -201,12 +190,22 @@ if( typeof Object.create !== 'function' ) {
 
     fallback: function(){
       console.log('show fallback');
-      var self = this;
+
+      var self = this,
+          fallback_img;
 
       if( self.options.videoFallback !== null ) {
-        $.get(self.options.videoFallback).done(function () {
-          self.$elem.css("background-image", "url(" + self.options.videoFallback + ")");
-        });
+
+        fallback_img = $('<img />')
+          .attr( 'src', self.options.videoFallback )
+          .load(function() {
+              if( !this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0 ) {
+                  console.log('broken image!');
+              } else {
+                $(this).remove();
+                self.$elem.css( 'background-image', 'url(' + self.options.videoFallback + ')' );
+              }
+          });
       }
     }
   };
