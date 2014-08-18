@@ -51,8 +51,11 @@ module.exports = function(grunt) {
         },
 
         watch: {
-          css: {
-            files: 'js/<%= pkg.file %>.js',
+          all: {
+            files: [
+                'js/<%= pkg.file %>.js',
+                'index.html'
+            ],
             tasks: ['jshint'],
             options: {
               livereload: true,
@@ -68,7 +71,5 @@ module.exports = function(grunt) {
 
 
     // " $ grunt build"
-    grunt.registerTask('build', ['uglify:prod']);
-
-    grunt.registerTask('dev', ['connect']);
+    grunt.registerTask('build', ['jshint', 'uglify:prod']);
 };
