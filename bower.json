@@ -1,0 +1,23 @@
+{
+  "name": "jquery-ambient-video",
+  "version": "0.0.1",
+  "homepage": "https://github.com/grelas/jquery-ambient-video",
+  "authors": [
+    "Greg LaSpina <grelas@gmail.com>"
+  ],
+  "description": "Create background videos",
+  "main": "dist/jquery.ambient.video.js",
+  "keywords": [
+    "jquery",
+    "ambient",
+    "video"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
