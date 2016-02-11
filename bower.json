@@ -1,6 +1,6 @@
 {
   "name": "jquery-ambient-video",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/grelas/jquery-ambient-video",
   "authors": [
     "Greg LaSpina <grelas@gmail.com>"
@@ -18,6 +18,11 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
-  ]
+    "tests",
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "waypoints": "^4.0.0"
+  }
 }
