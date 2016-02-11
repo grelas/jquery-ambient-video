@@ -2,3 +2,4 @@ node_modules/
 bower_components/
 src/lib/
 .DS_Store
+npm-debug.log

@@ -1,5 +1,6 @@
 'use strict';
 
+var connect = require('gulp-connect');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var plumber = require('gulp-plumber');
@@ -44,8 +45,12 @@ gulp.task('lint', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(jsFiles, ['lint', 'build']);
+  gulp.watch(jsFiles, ['build']);
+});
+
+gulp.task('connect', ['build'], function() {
+  connect.server();
 });
 
 gulp.task('build', ['lint', 'uglify']);
-gulp.task('default', ['lint', 'build', 'watch']);
+gulp.task('default', ['connect', 'watch']);

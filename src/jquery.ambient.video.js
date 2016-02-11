@@ -8,6 +8,7 @@ if(typeof Object.create !== 'function') {
   };
 }
 
+
 (function($, window, document, undefined) {
   var AmbientVideo = {
     init: function(options, elem) {
