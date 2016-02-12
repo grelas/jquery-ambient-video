@@ -35,6 +35,12 @@ gulp.task('uglify', function() {
     .pipe(gulp.dest(distFolder));
 });
 
+gulp.task('css', function() {
+  return gulp.src('src/css/jquery.ambient.video.css')
+    .pipe(plumber())
+    .pipe(gulp.dest(distFolder));
+});
+
 gulp.task('lint', function() {
   var lintFiles = jsFiles.concat('gulpfile.js');
   return gulp.src(lintFiles)
@@ -52,5 +58,5 @@ gulp.task('connect', ['build'], function() {
   connect.server();
 });
 
-gulp.task('build', ['lint', 'uglify']);
+gulp.task('build', ['lint', 'css', 'uglify']);
 gulp.task('default', ['connect', 'watch']);

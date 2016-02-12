@@ -6,7 +6,10 @@
     "Greg LaSpina <grelas@gmail.com>"
   ],
   "description": "Create background videos",
-  "main": "dist/jquery.ambient.video.js",
+  "main": [
+    "dist/jquery.ambient.video.js",
+    "dist/jquery.ambient.video.css"
+  ],
   "keywords": [
     "jquery",
     "ambient",
@@ -25,12 +28,12 @@
     ".jscsrc",
     ".jshintrc",
     "bower.json",
+    ".bower.json",
     "gulpfile.js",
     "README.md"
   ],
-  "private": true,
   "dependencies": {
-    "jquery": "^2.2.0",
-    "waypoints": "^4.0.0"
+    "jquery": "~2.2.x",
+    "waypoints": "~4.0.0"
   }
 }

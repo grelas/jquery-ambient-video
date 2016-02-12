@@ -55,13 +55,11 @@ if (typeof Object.create !== 'function') {
       var showVideo = supports().video && !supports().ios && !supports().android;
 
       if (showVideo) {
-        self.$elem.waypoint(function(){
+        self.$elem.waypoint(function(direction) {
           self.insertVideo();
         }, {
-          offset: self.options.videoOffset,
-          triggerOnce: true
+          offset: self.options.videoOffset
         });
-
       } else {
         self.fallback();
       }
