@@ -19,5 +19,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "waypoints": "^4.0.0"
+  }
 }
