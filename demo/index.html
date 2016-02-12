@@ -31,6 +31,14 @@
   <button id="toggleVideo2" type="button">Toggle First Instance</button>
 </div>
 
+<div class="spacer">
+  <div id="videoContainer4" class="ambient-video" data-video-src="video/timeline" data-video-loop="true"></div>
+
+  <button id="playVideo4" type="button">Play First Instance</button>
+  <button id="pauseVideo4" type="button">Pause First Instance</button>
+  <button id="toggleVideo4" type="button">Toggle First Instance</button>
+</div>
+
 <script src="../src/lib/jquery/dist/jquery.js"></script>
 <script src="../src/lib/waypoints/lib/jquery.waypoints.js"></script>
 <script src="../dist/jquery.ambient.video.js"></script>
@@ -97,6 +105,25 @@ $(function(){
 
   $('#toggleVideo3').on('click',function(){
     videoInstance3.toggle();
+  });
+
+  // instance 4
+  $('#videoContainer4').ambientVideo({
+    videoClass: 'screen'
+  });
+
+  var videoInstance4 = $('#videoContainer4').data('ambientVideo');
+
+  $('#playVideo4').on('click',function(){
+    videoInstance4.play();
+  });
+
+  $('#pauseVideo4').on('click',function(){
+    videoInstance4.pause();
+  });
+
+  $('#toggleVideo4').on('click',function(){
+    videoInstance4.toggle();
   });
 });
 </script>
