@@ -22,7 +22,7 @@ gulp.task('uglify', function() {
   return gulp.src('src/*.js')
     .pipe(plumber())
     .pipe(gulp.dest(distFolder))
-    .pipe(gulpif(isProduction, uglify({
+    .pipe(uglify({
       mangle: false,
       compress: {
         drop_console: true,
@@ -30,7 +30,7 @@ gulp.task('uglify', function() {
           DEBUG: false
         }
       }
-    })))
+    }))
     .pipe(rename({extname: '.min.js'}))
     .pipe(gulp.dest(distFolder));
 });
