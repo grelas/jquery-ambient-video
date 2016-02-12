@@ -57,6 +57,10 @@ if (typeof Object.create !== 'function') {
       if (showVideo) {
         self.$elem.waypoint(function(direction) {
           self.insertVideo();
+
+          // this prevents the video from getting inserted
+          // into the dom everytime
+          this.destroy();
         }, {
           offset: self.options.videoOffset
         });
