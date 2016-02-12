@@ -1,6 +1,6 @@
 'use strict';
 
-if(typeof Object.create !== 'function') {
+if (typeof Object.create !== 'function') {
   Object.create = function(obj) {
     function F(){}
     F.prototype = obj;
@@ -8,8 +8,24 @@ if(typeof Object.create !== 'function') {
   };
 }
 
-
 (function($, window, document, undefined) {
+
+  /**
+   * Helper function to list out browser support/user agent
+   * @return {object} An object of boolean values
+   */
+  function supports() {
+    return {
+      ios: /iPad|iPhone|iPod/i.test(navigator.userAgent),
+      android: /Android/i.test(navigator.userAgent),
+      video: !!document.createElement('video').canPlayType
+    };
+  }
+
+  /**
+   * Ambient video
+   * @type {Object}
+   */
   var AmbientVideo = {
     init: function(options, elem) {
       var self = this;
@@ -21,9 +37,9 @@ if(typeof Object.create !== 'function') {
       self.$elem = $(elem);
 
       // extend options
-      self.options = $.extend({}, $.fn.ambientVideo.defaults,  self.$elem.data(), options);
+      self.options = $.extend({}, $.fn.ambientVideo.defaults, self.$elem.data(), options);
 
-      if(typeof self.options.videoSrc === 'undefined') {
+      if (!self.options.videoSrc) {
         throw new Error('You must include a `video-src` data-attribute');
       }
 
@@ -32,16 +48,13 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [build description]
-     * @return {[type]} [description]
+     * Build
      */
     build: function(){
       var self = this;
+      var showVideo = supports().video && !supports().ios && !supports().android;
 
-      //check to see if browser can support html5 video
-      //and whether a video src exists
-      if(self.check().supports_video && self.options.videoSrc !== null && !self.check().is_iOS && !self.check().is_Android) {
-
+      if (showVideo) {
         self.$elem.waypoint(function(){
           self.insertVideo();
         }, {
@@ -55,20 +68,7 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [check description]
-     * @return {[type]} [description]
-     */
-    check: function(){
-      return {
-        supports_video: !!document.createElement('video').canPlayType,
-        is_iOS:         /iPad|iPhone|iPod/i.test(navigator.userAgent),
-        is_Android:     /Android/i.test(navigator.userAgent)
-      };
-    },
-
-    /**
-     * [insertVideo description]
-     * @return {[type]} [description]
+     * Insert video into DOM
      */
     insertVideo: function(){
       var self = this;
@@ -79,12 +79,8 @@ if(typeof Object.create !== 'function') {
           '<source src="'+ self.options.videoSrc + '.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">' +
         '</video>';
 
-      // html5 video
-     // self.video_html = '<video preload muted>' + self.video_src_html + '</video>';
-
-      // insert the full <video><source></source></video> into the element{
+      // insert the full <video><source></source></video> into the element
       self.$elem.append(self.video_src_html);
-      //self.$elem.html(self.video_html);
 
       // store the video dom node so we can use html5 video methods like play/pause
       self.video_dom = self.$elem.find('video')[0];
@@ -96,7 +92,7 @@ if(typeof Object.create !== 'function') {
         loop: self.options.videoLoop
       });
 
-      self.baseClass();
+      self.addClass();
       self.load();
 
       // Wait until readyState is 4 (if you don't specify a poster,
@@ -120,21 +116,19 @@ if(typeof Object.create !== 'function') {
       self.$video_dom.on('ended', function(){
         self.pause();
 
-        if(typeof self.options.onComplete === 'function') {
+        if (typeof self.options.onComplete === 'function') {
           self.options.onComplete.apply(self.elem, arguments);
         }
       });
-
     },
 
     /**
-     * [baseClass description]
-     * @return {[type]} [description]
+     * Add class
      */
-    baseClass: function(){
+    addClass: function(){
       var self = this;
 
-      if(self.options.videoClass) {
+      if (self.options.videoClass) {
         self.$video_dom.addClass(self.options.videoClass);
       } else {
         self.$video_dom.addClass($.fn.ambientVideo.defaults.videoClass);
@@ -142,8 +136,7 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [load description]
-     * @return {[type]} [description]
+     * Load video
      */
     load: function(){
       var self = this;
@@ -151,38 +144,35 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [play description]
-     * @return {[type]} [description]
+     * Play video
      */
     play: function(){
       var self = this;
 
-      if(self.video_dom.paused) {
+      if (self.video_dom.paused) {
         self.video_dom.play();
       }
     },
 
     /**
-     * [pause description]
-     * @return {[type]} [description]
+     * Pause video
      */
     pause: function(){
       var self = this;
 
-      if(!self.video_dom.paused) {
+      if (!self.video_dom.paused) {
         self.video_dom.pause();
         self.is_video_playing = false;
       }
     },
 
     /**
-     * [toggle description]
-     * @return {[type]} [description]
+     * Toggle video playback
      */
     toggle: function(){
       var self = this;
 
-      if(self.video_dom.paused) {
+      if (self.video_dom.paused) {
         self.play();
       } else {
         self.pause();
@@ -190,8 +180,7 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [replay description]
-     * @return {[type]} [description]
+     * Start the video from the beginning
      */
     replay: function(){
       var self = this;
@@ -200,15 +189,13 @@ if(typeof Object.create !== 'function') {
     },
 
     /**
-     * [fallback description]
-     * @return {[type]} [description]
+     * Fallback
      */
     fallback: function(){
       var self = this;
       var fallback_img;
 
-      if (self.options.videoFallback !== null) {
-
+      if (self.options.videoFallback) {
         fallback_img = $('<img />')
           .attr('src', self.options.videoFallback )
           .load(function() {
@@ -230,19 +217,19 @@ if(typeof Object.create !== 'function') {
       // run the initialzation function of the AmbientVideo object
       video.init(options, this);
 
-
       // Save the instance of the video object in the element's data store
       $.data(this, 'ambientVideo', video);
     });
   };
 
+  // Set defaults for the plugin
   $.fn.ambientVideo.defaults = {
     videoOffset: '100%',
-    videoClass:  'ambient-video-wrap',
+    videoClass: 'ambient-video-wrap',
     videoFallback: null,
-    videoLoop:   false,
-    videoSrc:    null,
-    onComplete:  null
+    videoLoop: false,
+    videoSrc: null,
+    onComplete: null
   };
 
 })(jQuery, window, document);

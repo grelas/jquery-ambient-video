@@ -22,6 +22,14 @@
   <button id="toggleVideo" type="button">Toggle First Instance</button>
 </div>
 
+<div class="spacer">
+  <div id="videoContainer2" class="ambient-video" data-video-src="video/lifestyle" data-video-fallback="img/product-fallback.jpg" data-video-loop="false"></div>
+
+  <button id="playVideo2" type="button">Play First Instance</button>
+  <button id="pauseVideo2" type="button">Pause First Instance</button>
+  <button id="toggleVideo2" type="button">Toggle First Instance</button>
+</div>
+
 <script src="../src/lib/jquery/dist/jquery.js"></script>
 <script src="../src/lib/waypoints/lib/jquery.waypoints.js"></script>
 <script src="../dist/jquery.ambient.video.js"></script>
@@ -30,7 +38,7 @@
 $(function(){
   'use strict';
 
-  //instance 1
+  // instance 1
   $('#videoContainer').ambientVideo({
     videoClass: 'custom-video-class',
     replayBtn: ''
@@ -39,8 +47,6 @@ $(function(){
   var videoInstance = $('#videoContainer').data('ambientVideo');
 
   $('#playVideo').on('click',function(){
-
-    console.log( videoInstance );
     videoInstance.play();
   });
 
@@ -54,11 +60,7 @@ $(function(){
 
   // instance 2
   $('#videoContainer2').ambientVideo({
-    onComplete: function(){
-      console.log('COMPLETE');
-      console.log(this);
-      console.log(arguments);
-    }
+    onComplete: function(){}
   });
 
   var videoInstance2 = $('#videoContainer2').data('ambientVideo');
@@ -78,7 +80,6 @@ $(function(){
   // instance 3
   $('#videoContainer3').ambientVideo({
     onComplete: function(){
-      console.log( this );
       $(this).css('opacity', '.5');
     }
   });
