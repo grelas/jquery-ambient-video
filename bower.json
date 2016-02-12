@@ -1,6 +1,6 @@
 {
   "name": "jquery-ambient-video",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/grelas/jquery-ambient-video",
   "authors": [
     "Greg LaSpina <grelas@gmail.com>"
@@ -18,7 +18,15 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "demo",
+    "src",
+    ".bowerrc",
+    ".jscsrc",
+    ".jshintrc",
+    "bower.json",
+    "gulpfile.js",
+    "README.md"
   ],
   "private": true,
   "dependencies": {
