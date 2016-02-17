@@ -52,9 +52,11 @@ if (typeof Object.create !== 'function') {
      */
     build: function(){
       var self = this;
-      var showVideo = supports().video && !supports().ios && !supports().android;
+      var isMobile = supports().ios || supports().android;
 
-      if (showVideo) {
+      if (isMobile && !self.options.hideControls) {
+        self.fallback();
+      } else {
         self.$elem.waypoint(function(direction) {
           self.insertVideo();
 
@@ -62,10 +64,8 @@ if (typeof Object.create !== 'function') {
           // into the dom everytime
           this.destroy();
         }, {
-          offset: self.options.videoOffset
+          offset: self.options.offset
         });
-      } else {
-        self.fallback();
       }
     },
 
@@ -74,9 +74,10 @@ if (typeof Object.create !== 'function') {
      */
     insertVideo: function(){
       var self = this;
+      var poster = self.options.posterImg || '';
 
       self.video_src_html = '' +
-        '<video preload="metadata" muted>' +
+        '<video preload="metadata" poster="' + poster + '" muted>' +
           '<source src="'+ self.options.videoSrc + '.webm" type="video/webm; codecs=vp8,vorbis">' +
           '<source src="'+ self.options.videoSrc + '.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">' +
         '</video>';
@@ -91,7 +92,7 @@ if (typeof Object.create !== 'function') {
       self.$video_dom = $(self.video_dom);
 
       self.$video_dom.prop({
-        loop: self.options.videoLoop
+        loop: self.options.loop
       });
 
       self.addClass();
@@ -130,10 +131,14 @@ if (typeof Object.create !== 'function') {
     addClass: function(){
       var self = this;
 
-      if (self.options.videoClass) {
-        self.$video_dom.addClass(self.options.videoClass);
+      if (self.options.hideControls) {
+        self.$video_dom.addClass('ambient-video--hide-controls');
+      }
+
+      if (self.options.class) {
+        self.$video_dom.addClass(self.options.class);
       } else {
-        self.$video_dom.addClass($.fn.ambientVideo.defaults.videoClass);
+        self.$video_dom.addClass($.fn.ambientVideo.defaults.class);
       }
     },
 
@@ -195,15 +200,11 @@ if (typeof Object.create !== 'function') {
      */
     fallback: function(){
       var self = this;
-      var fallback_img;
 
-      if (self.options.videoFallback) {
-        fallback_img = $('<img />')
-          .attr('src', self.options.videoFallback )
-          .load(function() {
-            $(this).remove();
-            self.$elem.css('background-image', 'url(' + self.options.videoFallback + ')');
-          });
+      if (self.options.fallbackImg) {
+        var fallback_img;
+
+        self.$elem.css('background-image', 'url(' + self.options.fallbackImg + ')');
       }
     }
   };
@@ -226,12 +227,14 @@ if (typeof Object.create !== 'function') {
 
   // Set defaults for the plugin
   $.fn.ambientVideo.defaults = {
-    videoOffset: '100%',
-    videoClass: 'ambient-video-wrap',
-    videoFallback: null,
-    videoLoop: false,
+    offset: '100%',
+    class: 'ambient-video-wrap',
+    fallbackImg: null,
+    posterImg: null,
+    loop: false,
     videoSrc: null,
-    onComplete: null
+    onComplete: null,
+    hideControls: false
   };
 
 })(jQuery, window, document);
