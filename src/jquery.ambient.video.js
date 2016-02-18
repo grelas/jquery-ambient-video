@@ -77,7 +77,7 @@ if (typeof Object.create !== 'function') {
     addFallbackImage: function(src) {
       var self = this;
       if (!src) return;
-      console.log(self.options.fullScreen);
+
       if (self.options.fullScreen) {
         self.$elem.css('background-image', 'url(' + src + ')');
       } else {
