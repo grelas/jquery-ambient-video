@@ -82,7 +82,7 @@ if (typeof Object.create !== 'function') {
         self.$elem.css('background-image', 'url(' + src + ')');
       } else {
         var img = $('<img />');
-        img.attr('src', self.options.fallbackImg);
+        img.attr('src', src);
         img.appendTo(self.$elem).show();
       }
     },
