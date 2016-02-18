@@ -77,12 +77,12 @@ if (typeof Object.create !== 'function') {
     addFallbackImage: function(src) {
       var self = this;
       if (!src) return;
-      console.log(self.options.fullScreen);
+
       if (self.options.fullScreen) {
         self.$elem.css('background-image', 'url(' + src + ')');
       } else {
         var img = $('<img />');
-        img.attr('src', self.options.fallbackImg);
+        img.attr('src', src);
         img.appendTo(self.$elem).show();
       }
     },
