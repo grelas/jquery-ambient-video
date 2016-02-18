@@ -49,23 +49,41 @@ if (typeof Object.create !== 'function') {
 
     /**
      * Build
+     * Ensure `this.destroy()` is present as it prevents
+     * the video from getting inserted into the DOM every time
      */
     build: function(){
       var self = this;
       var isMobile = supports().ios || supports().android;
 
-      if (isMobile && !self.options.hideControls) {
-        self.fallback();
+      if (isMobile) {
+        self.addFallbackImage(self.options.fallbackImg);
       } else {
         self.$elem.waypoint(function(direction) {
           self.insertVideo();
-
-          // this prevents the video from getting inserted
-          // into the dom everytime
           this.destroy();
         }, {
           offset: self.options.offset
         });
+      }
+    },
+
+    /**
+     * Add fallback image
+     * This sets the background-image of the video element
+     *
+     * @param {string} src The fallback image url
+     */
+    addFallbackImage: function(src) {
+      var self = this;
+      if (!src) return;
+      console.log(self.options.fullScreen);
+      if (self.options.fullScreen) {
+        self.$elem.css('background-image', 'url(' + src + ')');
+      } else {
+        var img = $('<img />');
+        img.attr('src', self.options.fallbackImg);
+        img.appendTo(self.$elem).show();
       }
     },
 
@@ -193,19 +211,6 @@ if (typeof Object.create !== 'function') {
       var self = this;
       self.video_dom.currentTime = 0;
       self.video_dom.play();
-    },
-
-    /**
-     * Fallback
-     */
-    fallback: function(){
-      var self = this;
-
-      if (self.options.fallbackImg) {
-        var fallback_img;
-
-        self.$elem.css('background-image', 'url(' + self.options.fallbackImg + ')');
-      }
     }
   };
 
@@ -234,7 +239,8 @@ if (typeof Object.create !== 'function') {
     loop: false,
     videoSrc: null,
     onComplete: null,
-    hideControls: false
+    hideControls: false,
+    fullScreen: true
   };
 
 })(jQuery, window, document);

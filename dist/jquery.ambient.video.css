@@ -12,9 +12,14 @@
   background-position: center center;
 }
 
-.ambient-video video.ambient-video-loaded {}
+.ambient-video video.ambient-video-loaded {
+  opacity: 1;
+  visibility: visible;
+}
 
 .ambient-video video {
+  opacity: 0;
+  visibility: hidden;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,7 +30,6 @@
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  /*opacity: 0;*/
   -moz-transition: opacity 450ms ease;
   -webkit-transition: opacity 450ms ease;
   transition: opacity 450ms ease;

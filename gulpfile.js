@@ -52,7 +52,7 @@ gulp.task('lint', function() {
 
 gulp.task('watch', function() {
   gulp.watch(jsFiles, ['build']);
-  gulp.watch('src/css/jquery.ambient.video.css', ['css'])
+  gulp.watch('src/css/jquery.ambient.video.css', ['css']);
 });
 
 gulp.task('connect', ['build'], function() {
